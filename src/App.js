@@ -1,16 +1,31 @@
-import { useSelector } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
-import Cart from './components/Cart/Cart';
-import Layout from './components/Layout/Layout';
-import Products from './components/Shop/Products';
+import AllQuotes from './pages/AllQuotes';
+import QuoteDetail from './pages/QuoteDetail';
+import NewQuote from './pages/NewQuote';
+import NotFound from './pages/NotFound';
+import Layout from './components/layout/Layout';
 
 function App() {
-  const showCart = useSelector((state) => state.ui.cartIsVisible);
-
   return (
     <Layout>
-      {showCart && <Cart />}
-      <Products />
+      <Switch>
+        <Route path='/' exact>
+          <Redirect to='/quotes' />
+        </Route>
+        <Route path='/quotes' exact>
+          <AllQuotes />
+        </Route>
+        <Route path='/quotes/:quoteId'>
+          <QuoteDetail />
+        </Route>
+        <Route path='/new-quote'>
+          <NewQuote />
+        </Route>
+        <Route path='*'>
+          <NotFound />
+        </Route>
+      </Switch>
     </Layout>
   );
 }
